@@ -16,12 +16,15 @@ public class Engine
     {
         networkController = new();
         networkController.ws.OnMessage += MessageHandler;
+        networkController.StartSocket();
+
         p = new();
         res = new(Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
     }
 
     public void Start()
     {
+        while (foodPoints.Count <= 0) ;
         while (!Raylib.WindowShouldClose())
         {
             MouseHandler();
@@ -41,6 +44,13 @@ public class Engine
 
         // Send position to server
         networkController.SendPlayerData(p.playerProps);
+
+        while (listLock) ;
+        listLock = true;
+        var indexes = p.Intersect(ref foodPoints);
+        listLock = false;
+
+        if (indexes.Count > 0) networkController.SendFoodData(indexes);
     }
 
     private void Render()
@@ -54,9 +64,9 @@ public class Engine
 
         while (listLock) ;
         listLock = true;
-        foreach (Food f in foodPoints)
+        for (int i = 0; i < foodPoints.Count; i++)
         {
-            f.Draw(p.playerProps.X - res.X / 2, p.playerProps.Y - res.Y / 2);
+            foodPoints[i].Draw(p.playerProps.X - res.X / 2, p.playerProps.Y - res.Y / 2);
         }
         listLock = false;
     }
@@ -95,12 +105,27 @@ public class Engine
             case "PlayerPos":
                 //Damn this will be a chunk here lul
                 break;
-            case "FoodUpdate":
+
+            case "InitFood":
                 while (listLock) ;
                 listLock = true;
                 foodPoints = JsonSerializer.Deserialize<List<Food>>(info.Content);
                 listLock = false;
                 break;
+
+            case "FoodUpdate":
+                while (listLock) ;
+                listLock = true;
+
+                List<FoodUpdate> newFood = JsonSerializer.Deserialize<List<FoodUpdate>>(info.Content);
+                foreach (FoodUpdate item in newFood)
+                {
+                    foodPoints[item.Index] = item.Food;
+                }
+
+                listLock = false;
+                break;
+
             default:
                 Console.WriteLine("Received unknown message type: " + info.MessageType);
                 Console.WriteLine("Content: " + info.Content);

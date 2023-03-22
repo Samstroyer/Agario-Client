@@ -10,12 +10,17 @@ public class Food
     public static int SpawnRadius = 1000;
     [JsonIgnore]
     private Color c = Color.RED;
+    [JsonIgnore]
+    public static int Radius { get; set; } = 5;
+    [JsonIgnore]
+    public bool taken = false;
 
     [JsonPropertyName("x"), JsonInclude]
     public int X { get; set; }
 
     [JsonPropertyName("y"), JsonInclude]
     public int Y { get; set; }
+
 
     public Food()
     {
@@ -25,6 +30,6 @@ public class Food
 
     public void Draw(float xOffset, float yOffset)
     {
-        Raylib.DrawCircle(X - (int)xOffset, Y - (int)yOffset, 10, c);
+        Raylib.DrawCircle(X - (int)xOffset, Y - (int)yOffset, 5, c);
     }
 }

@@ -3,10 +3,12 @@ using System.Net;
 
 public class SendInfo
 {
-    [JsonInclude]
+    [JsonPropertyName("type"), JsonInclude]
     public string MessageType { get; set; }
-    [JsonInclude]
+
+    [JsonPropertyName("content"), JsonInclude]
     public string Content { get; set; }
-    [JsonInclude]
-    private static string ID = System.Environment.MachineName;
+
+    [JsonPropertyName("id"), JsonInclude]
+    public string ID = System.Environment.MachineName;
 }

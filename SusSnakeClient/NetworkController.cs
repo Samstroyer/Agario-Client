@@ -12,14 +12,18 @@ public class NetworkController
         ConnectClient();
     }
 
+    public void StartSocket()
+    {
+        ws.Connect();
+    }
+
     public void ConnectClient()
     {
         string socketStart = "ws://";
         string enteredAddress = "";
         bool failed = false;
 
-        ws = new("ws://192.168.10.240:3000/snake");
-        ws.Connect();
+        ws = new("ws://192.168.10.177:3000/snake");
         return;
 
     // Could probably be done without a goto, but that would require insane code indentation and more complexity. 
@@ -76,8 +80,19 @@ public class NetworkController
     {
         string packet = JsonSerializer.Serialize<SendInfo>(new()
         {
-            MessageType = "updatePosition",
+            MessageType = "position",
             Content = JsonSerializer.Serialize<SnakeProperties>(playerProps)
+        });
+
+        ws.Send(packet);
+    }
+
+    public void SendFoodData(List<int> indexes)
+    {
+        string packet = JsonSerializer.Serialize<SendInfo>(new()
+        {
+            MessageType = "ate",
+            Content = JsonSerializer.Serialize<List<int>>(indexes)
         });
 
         ws.Send(packet);
