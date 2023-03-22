@@ -29,7 +29,7 @@ public class Player
 
         Raylib.DrawCircle((int)(res.X / 2), (int)(res.Y / 2), 20, Color.GREEN);
 
-        if (playerProps.PreviousPointsList.Count < 1) return;
+        if (playerProps.Body.Count < 1) return;
 
         // List<int> points = playerProps.PreviousPointsList;
         // for (int i = 0; i < points.Count; i++)

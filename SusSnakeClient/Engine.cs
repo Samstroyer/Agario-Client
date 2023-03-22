@@ -14,7 +14,7 @@ public class Engine
 
     public Engine()
     {
-        // networkController = new();
+        networkController = new();
         networkController.ws.OnMessage += MessageHandler;
         p = new();
         res = new(Raylib.GetScreenWidth(), Raylib.GetScreenHeight());

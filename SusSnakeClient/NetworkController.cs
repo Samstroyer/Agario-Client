@@ -18,6 +18,10 @@ public class NetworkController
         string enteredAddress = "";
         bool failed = false;
 
+        ws = new("ws://192.168.10.240:3000/snake");
+        ws.Connect();
+        return;
+
     // Could probably be done without a goto, but that would require insane code indentation and more complexity. 
     // I rather just use a goto to make this work smoothly
     RedoAddress:
