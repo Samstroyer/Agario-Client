@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Raylib_cs;
 
 public class SnakeProperties
 {
@@ -10,4 +11,9 @@ public class SnakeProperties
 
     [JsonPropertyName("body"), JsonInclude]
     public List<BodyClass> Body { get; set; } = new();
+
+    public void Draw(Color c)
+    {
+        Raylib.DrawCircle((int)X, (int)Y, 10, c);
+    }
 }

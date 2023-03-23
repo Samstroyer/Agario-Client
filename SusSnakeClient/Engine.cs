@@ -8,9 +8,11 @@ public class Engine
     NetworkController networkController;
     Player p;
     Vector2 res;
+
+    public static bool otherListLock = false;
     Dictionary<string, SnakeProperties> others = new();
 
-    public static bool listLock = false;
+    public static bool foodListLock = false;
     List<Food> foodPoints = new();
 
     public Engine()
@@ -46,10 +48,10 @@ public class Engine
         // Send position to server
         networkController.SendPlayerData(p.playerProps);
 
-        while (listLock) ;
-        listLock = true;
+        while (foodListLock) ;
+        foodListLock = true;
         var indexes = p.Intersect(ref foodPoints);
-        listLock = false;
+        foodListLock = false;
 
         if (indexes.Count > 0) networkController.SendFoodData(indexes);
     }
@@ -63,13 +65,21 @@ public class Engine
 
         p.Draw();
 
-        while (listLock) ;
-        listLock = true;
+        while (foodListLock) ;
+        foodListLock = true;
         for (int i = 0; i < foodPoints.Count; i++)
         {
             foodPoints[i].Draw(p.playerProps.X - res.X / 2, p.playerProps.Y - res.Y / 2);
         }
-        listLock = false;
+        foodListLock = false;
+
+        while (otherListLock) ;
+        otherListLock = true;
+        foreach (KeyValuePair<string, SnakeProperties> kvp in others)
+        {
+            kvp.Value.Draw(Color.GREEN);
+        }
+        otherListLock = false;
     }
 
     private void EndScene()
@@ -105,19 +115,22 @@ public class Engine
         switch (info.MessageType)
         {
             case "OtherPlayers":
+                while (otherListLock) ;
+                otherListLock = true;
                 others = JsonSerializer.Deserialize<Dictionary<string, SnakeProperties>>(info.Content);
+                otherListLock = false;
                 break;
 
             case "InitFood":
-                while (listLock) ;
-                listLock = true;
+                while (foodListLock) ;
+                foodListLock = true;
                 foodPoints = JsonSerializer.Deserialize<List<Food>>(info.Content);
-                listLock = false;
+                foodListLock = false;
                 break;
 
             case "FoodUpdate":
-                while (listLock) ;
-                listLock = true;
+                while (foodListLock) ;
+                foodListLock = true;
 
                 List<FoodUpdate> newFood = JsonSerializer.Deserialize<List<FoodUpdate>>(info.Content);
                 foreach (FoodUpdate item in newFood)
@@ -125,7 +138,7 @@ public class Engine
                     foodPoints[item.Index] = item.Food;
                 }
 
-                listLock = false;
+                foodListLock = false;
                 break;
 
             default:
