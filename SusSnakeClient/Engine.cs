@@ -8,6 +8,7 @@ public class Engine
     NetworkController networkController;
     Player p;
     Vector2 res;
+    Dictionary<string, SnakeProperties> others = new();
 
     public static bool listLock = false;
     List<Food> foodPoints = new();
@@ -94,6 +95,7 @@ public class Engine
         Vector2 referencePos = Vector2.Subtract(mousePos, new(res.X / 2, res.Y / 2)) / 100;
 
         p.Move(referencePos.X, referencePos.Y);
+        p.MoveBody();
     }
 
     private void MessageHandler(object sender, MessageEventArgs e)
@@ -102,8 +104,8 @@ public class Engine
 
         switch (info.MessageType)
         {
-            case "PlayerPos":
-                //Damn this will be a chunk here lul
+            case "OtherPlayers":
+                others = JsonSerializer.Deserialize<Dictionary<string, SnakeProperties>>(info.Content);
                 break;
 
             case "InitFood":

@@ -39,6 +39,22 @@ public class Player
         // }
     }
 
+    public void MoveBody()
+    {
+        if (playerProps.Body.Count < 1) return;
+
+        for (int i = playerProps.Body.Count - 1; i > 0; i--)
+        {
+            playerProps.Body[i] = playerProps.Body[i - 1];
+        }
+
+        playerProps.Body[0] = new()
+        {
+            X = playerProps.X,
+            Y = playerProps.Y
+        };
+    }
+
     public void Move(float xSpeed, float ySpeed)
     {
         playerProps.X += xSpeed;

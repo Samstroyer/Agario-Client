@@ -23,8 +23,10 @@ public class NetworkController
         string enteredAddress = "";
         bool failed = false;
 
-    // ws = new("ws://192.168.10.177:3000/snake");
-    // return;
+        // ws = new("ws://192.168.10.177:3000/snake");
+        // return;
+        ws = new("ws://10.156.10.93:3000/snake");
+        return;
 
     // Could probably be done without a goto, but that would require insane code indentation and more complexity. 
     // I rather just use a goto to make this work smoothly
