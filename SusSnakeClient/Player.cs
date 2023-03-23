@@ -87,6 +87,8 @@ public class Player
             }
         }
 
+        playerProps.Body.Add(new());
+
         return foodIndexes;
     }
 }

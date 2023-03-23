@@ -12,8 +12,8 @@ public class SnakeProperties
     [JsonPropertyName("body"), JsonInclude]
     public List<BodyClass> Body { get; set; } = new();
 
-    public void Draw(Color c)
+    public void Draw(Color c, float playerX, float playerY)
     {
-        Raylib.DrawCircle((int)X, (int)Y, 10, c);
+        Raylib.DrawCircle((int)(X + playerX), (int)(Y + playerY), 10, c);
     }
 }

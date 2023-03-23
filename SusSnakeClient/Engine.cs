@@ -15,6 +15,8 @@ public class Engine
     public static bool foodListLock = false;
     List<Food> foodPoints = new();
 
+    string ownID;
+
     public Engine()
     {
         networkController = new();
@@ -23,6 +25,8 @@ public class Engine
 
         p = new();
         res = new(Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
+
+        ownID = new SendInfo().ID;
     }
 
     public void Start()
@@ -77,7 +81,7 @@ public class Engine
         otherListLock = true;
         foreach (KeyValuePair<string, SnakeProperties> kvp in others)
         {
-            kvp.Value.Draw(Color.GREEN);
+            kvp.Value.Draw(Color.GREEN, p.playerProps.X, p.playerProps.Y);
         }
         otherListLock = false;
     }
@@ -118,6 +122,9 @@ public class Engine
                 while (otherListLock) ;
                 otherListLock = true;
                 others = JsonSerializer.Deserialize<Dictionary<string, SnakeProperties>>(info.Content);
+
+                if (others.ContainsKey(ownID)) others.Remove(ownID);
+
                 otherListLock = false;
                 break;
 
