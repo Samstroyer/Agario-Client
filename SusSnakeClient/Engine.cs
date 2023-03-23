@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Numerics;
 using WebSocketSharp;
+using System.Timers;
 using Raylib_cs;
 
 public class Engine
@@ -27,6 +28,7 @@ public class Engine
 
         p = new();
         res = new(Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
+
     }
 
     public void Start()
@@ -45,13 +47,21 @@ public class Engine
         }
     }
 
+    public void TimerSend(Object source, ElapsedEventArgs e)
+    {
+        // Send position to server
+
+        while (Player.propsLock) ;
+        Player.propsLock = true;
+
+        networkController.SendPlayerData(p.playerProps);
+
+        Player.propsLock = false;
+    }
+
     private void Logic()
     {
         // This function should probably be named bloatware!
-
-        // Send position to server
-        networkController.SendPlayerData(p.playerProps);
-
         while (foodListLock) ;
         foodListLock = true;
         var indexes = p.Intersect(ref foodPoints);
@@ -62,12 +72,17 @@ public class Engine
 
     private void Render()
     {
+        while (Player.propsLock) ;
+        Player.propsLock = true;
+
         int spaceX = -Food.SpawnRadius - (int)p.playerProps.X + (int)res.X / 2 - 20;
         int spaceY = -Food.SpawnRadius - (int)p.playerProps.Y + (int)res.Y / 2 - 20;
         int size = 40 + Food.SpawnRadius * 2;
         Raylib.DrawRectangle(spaceX, spaceY, size, size, Color.WHITE);
 
         p.Draw();
+
+        Player.propsLock = false;
 
         while (foodListLock) ;
         foodListLock = true;
