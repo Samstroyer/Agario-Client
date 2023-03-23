@@ -19,14 +19,14 @@ public class Engine
 
     public Engine()
     {
+        ownID = new SendInfo().ID;
+
         networkController = new();
         networkController.ws.OnMessage += MessageHandler;
         networkController.StartSocket();
 
         p = new();
         res = new(Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
-
-        ownID = new SendInfo().ID;
     }
 
     public void Start()
