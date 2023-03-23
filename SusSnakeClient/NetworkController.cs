@@ -62,7 +62,7 @@ public class NetworkController
         try
         {
             // Try to connect to the IP
-            ipAddress = socketStart + enteredAddress + "3000";
+            ipAddress = socketStart + enteredAddress + ":3000/snake";
             ws = new(ipAddress);
             Console.WriteLine("Using: " + ipAddress + " for connecting the socket!");
         }
