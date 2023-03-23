@@ -60,7 +60,6 @@ public class NetworkController
 
             enteredAddress += (char)(int)key;
         }
-
         try
         {
             // Try to connect to the IP

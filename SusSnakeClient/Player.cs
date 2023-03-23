@@ -3,7 +3,6 @@ using Raylib_cs;
 
 public class Player
 {
-    public static bool propsLock = false;
     public SnakeProperties playerProps = new();
     Vector2 res;
 
@@ -28,9 +27,6 @@ public class Player
 
     public void Draw()
     {
-        while (propsLock) ;
-        propsLock = true;
-
         Raylib.DrawCircle((int)(res.X / 2), (int)(res.Y / 2), playerRadius, Color.GREEN);
 
         if (playerProps.Body.Count < 1) return;
@@ -41,14 +37,10 @@ public class Player
         //     Raylib.DrawCircle(points[i].)
         // }
 
-        propsLock = false;
     }
 
     public void MoveBody()
     {
-        while (propsLock) ;
-        propsLock = true;
-
         if (playerProps.Body.Count < 1) return;
 
         for (int i = playerProps.Body.Count - 1; i > 0; i--)
@@ -61,15 +53,10 @@ public class Player
             X = playerProps.X,
             Y = playerProps.Y
         };
-
-        propsLock = true;
     }
 
     public void Move(float xSpeed, float ySpeed)
     {
-        while (propsLock) ;
-        propsLock = true;
-
         playerProps.X += (int)xSpeed;
         playerProps.Y += (int)ySpeed;
 
@@ -83,14 +70,10 @@ public class Player
 
         Console.WriteLine("X: {0}, Y: {1}", playerProps.X, playerProps.Y);
 
-        propsLock = false;
     }
 
     public List<int> Intersect(ref List<Food> food)
     {
-        while (propsLock) ;
-        propsLock = true;
-
         if (food.Count < 1) return new();
 
         List<int> foodIndexes = new();
@@ -105,8 +88,6 @@ public class Player
             }
         }
         playerProps.Body.Add(new());
-
-        propsLock = false;
 
         return foodIndexes;
     }

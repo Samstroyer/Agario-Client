@@ -51,12 +51,9 @@ public class Engine
     {
         // Send position to server
 
-        while (Player.propsLock) ;
-        Player.propsLock = true;
 
         networkController.SendPlayerData(p.playerProps);
 
-        Player.propsLock = false;
     }
 
     private void Logic()
@@ -72,8 +69,6 @@ public class Engine
 
     private void Render()
     {
-        while (Player.propsLock) ;
-        Player.propsLock = true;
 
         int spaceX = -Food.SpawnRadius - (int)p.playerProps.X + (int)res.X / 2 - 20;
         int spaceY = -Food.SpawnRadius - (int)p.playerProps.Y + (int)res.Y / 2 - 20;
@@ -82,7 +77,6 @@ public class Engine
 
         p.Draw();
 
-        Player.propsLock = false;
 
         while (foodListLock) ;
         foodListLock = true;
