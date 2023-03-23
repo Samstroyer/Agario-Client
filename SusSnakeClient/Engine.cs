@@ -10,6 +10,12 @@ public class Engine
     Player p;
     Vector2 res;
 
+    System.Timers.Timer positionSender = new(250)
+    {
+        AutoReset = true,
+        Enabled = true
+    };
+
     public static bool otherListLock = false;
     Dictionary<string, SnakeProperties> others = new();
 
@@ -29,6 +35,8 @@ public class Engine
         p = new();
         res = new(Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
 
+        positionSender.Elapsed += TimerSend;
+        positionSender.Start();
     }
 
     public void Start()
@@ -51,9 +59,7 @@ public class Engine
     {
         // Send position to server
 
-
         networkController.SendPlayerData(p.playerProps);
-
     }
 
     private void Logic()

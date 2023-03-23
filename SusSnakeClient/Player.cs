@@ -85,9 +85,9 @@ public class Player
             {
                 foodIndexes.Add(i);
                 food[i].taken = true;
+                playerProps.Body.Add(new());
             }
         }
-        playerProps.Body.Add(new());
 
         return foodIndexes;
     }
