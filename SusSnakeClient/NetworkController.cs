@@ -2,36 +2,44 @@ using System.Text.Json;
 using WebSocketSharp;
 using Raylib_cs;
 
+/*
+    This class is a small container for the websocket, making the Engine class not as bloated
+*/
+
 public class NetworkController
 {
     public WebSocket ws;
     string ipAddress = "";
 
+    // When creating a NetworkController it connects client
     public NetworkController()
     {
         ConnectClient();
     }
 
+    // When you connect the client the food data is sent back directly
+    // This funtion is here to make sure everything else is ready for recieving the food data
     public void StartSocket()
     {
         ws.Connect();
     }
 
+    // This is a simple interface for connecting to a server with an IP
     public void ConnectClient()
     {
         string socketStart = "ws://";
         string enteredAddress = "";
         bool failed = false;
 
-        // ws = new("ws://192.168.10.177:3000/snake");
-        // return;
-        ws = new("ws://10.151.173.27:3000/snake");
+        // FOR 
+        ws = new("ws://192.168.10.240:3000/snake");
         return;
+    // ws = new("ws://10.151.173.27:3000/snake");
+    // return;
 
-    // Could probably be done without a goto, but that would require insane code indentation and more complexity. 
-    // I rather just use a goto to make this work smoothly
+    // Could probably be done without a goto, but that would require insane code indentation and more complexity
+    // I rather just use a goto to make this simple and work smoothly 
     RedoAddress:
-
         while (true)
         {
             Raylib.BeginDrawing();
@@ -76,22 +84,24 @@ public class NetworkController
         }
     }
 
-    public void SendPlayerData(SnakeProperties playerProps)
+    // This function sends the player data
+    public void SendPlayerData(PlayerProperties playerProps)
     {
         string packet = JsonSerializer.Serialize<SendInfo>(new()
         {
-            MessageType = "position",
-            Content = JsonSerializer.Serialize<SnakeProperties>(playerProps)
+            MessageType = MessageType.Position,
+            Content = JsonSerializer.Serialize<PlayerProperties>(playerProps)
         });
 
         ws.Send(packet);
     }
 
+    //This function sends the eaten food data
     public void SendFoodData(List<int> indexes)
     {
         string packet = JsonSerializer.Serialize<SendInfo>(new()
         {
-            MessageType = "ate",
+            MessageType = MessageType.Food,
             Content = JsonSerializer.Serialize<List<int>>(indexes)
         });
 

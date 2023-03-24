@@ -1,17 +1,22 @@
 using System.Text.Json.Serialization;
-using System.Numerics;
 using Raylib_cs;
+
+/*
+    Food class
+    This class is hopefully used by the server to set the spawnradius of the server and playable area
+    Possibly making it dynamic from amount of players present
+*/
 
 public class Food
 {
     [JsonIgnore]
-    private static Random r = new();
-    [JsonIgnore]
     public static int SpawnRadius = 1000;
     [JsonIgnore]
-    private Color c = Color.RED;
+    private static Color c = Color.RED;
     [JsonIgnore]
     public static int Radius { get; set; } = 5;
+
+    // Taken is so that you can't eat the same food multiple times (The server removes and adds a new food)
     [JsonIgnore]
     public bool taken = false;
 
@@ -20,13 +25,6 @@ public class Food
 
     [JsonPropertyName("y"), JsonInclude]
     public int Y { get; set; }
-
-
-    public Food()
-    {
-        X = r.Next(-SpawnRadius, SpawnRadius);
-        Y = r.Next(-SpawnRadius, SpawnRadius);
-    }
 
     public void Draw(float xOffset, float yOffset)
     {

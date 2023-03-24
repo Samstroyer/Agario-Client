@@ -7,7 +7,7 @@ Start();
 
 void Setup()
 {
-    Raylib.InitWindow(800, 800, "Sussy wussy snake");
+    Raylib.InitWindow(800, 800, "Agario");
     Raylib.SetTargetFPS(60);
     e = new();
 }
