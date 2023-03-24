@@ -31,11 +31,11 @@ public class NetworkController
         string enteredAddress = "";
         bool failed = false;
 
-        // FOR 
-        ws = new("ws://192.168.10.240:3000/snake");
-        return;
-    // ws = new("ws://10.151.173.27:3000/snake");
-    // return;
+    //// FOR DEBUG
+    //// ws = new("ws://192.168.10.240:3000/snake");
+    //// return;
+    //// ws = new("ws://10.151.173.27:3000/snake");
+    //// return;
 
     // Could probably be done without a goto, but that would require insane code indentation and more complexity
     // I rather just use a goto to make this simple and work smoothly 
@@ -106,5 +106,19 @@ public class NetworkController
         });
 
         ws.Send(packet);
+    }
+
+    // This function is for closing the websocket
+    // It removes the player from the dictionary (server side) and makes it not appear for others (No Littering!)
+    public void Close()
+    {
+        string packet = JsonSerializer.Serialize<SendInfo>(new()
+        {
+            MessageType = MessageType.Close,
+            Content = "Sorry, we are leaving!"
+        });
+        ws.Send(packet);
+
+        ws.Close(CloseStatusCode.Normal, "Client closed!");
     }
 }

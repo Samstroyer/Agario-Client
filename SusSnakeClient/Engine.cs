@@ -18,6 +18,9 @@ public class Engine
         Enabled = true
     };
 
+    // Transparent color for the leaderboard 😎
+    Color c = new(0, 0, 0, 120);
+
     // List of all the other players
     public static bool otherListLock = false;
     Dictionary<string, PlayerProperties> others = new();
@@ -66,6 +69,8 @@ public class Engine
 
             EndScene();
         }
+
+        networkController.Close();
     }
 
     public void TimerSend(Object source, ElapsedEventArgs e)
@@ -108,7 +113,8 @@ public class Engine
 
     private void RenderScores()
     {
-
+        // Render a scoreboard with the top 3 players (by score)
+        // Raylib.DrawRectangle()
     }
 
     private void RenderOthers()
@@ -148,9 +154,6 @@ public class Engine
         int spaceY = -Food.SpawnRadius - (int)p.playerProps.Y + (int)res.Y / 2;
         int size = Food.SpawnRadius * 2;
         Raylib.DrawRectangle(spaceX, spaceY, size, size, Color.WHITE);
-
-        // Lines (makes it easier to see player movement on "dry" servers)
-
     }
 
     // Ends the Raylib draw

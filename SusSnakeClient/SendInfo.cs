@@ -11,7 +11,8 @@ public enum MessageType
     Position = 1,
     OtherPlayers = 2,
     Food = 3,
-    GetFood = 4
+    GetFood = 4,
+    Close = 1001
 }
 
 // The send info sends what type of message, the content and the ID of sender
