@@ -27,32 +27,7 @@ public class Player
 
     public void Draw()
     {
-        Raylib.DrawCircle((int)(res.X / 2), (int)(res.Y / 2), playerRadius, Color.GREEN);
-
-        if (playerProps.Body.Count < 1) return;
-
-        // List<int> points = playerProps.PreviousPointsList;
-        // for (int i = 0; i < points.Count; i++)
-        // {
-        //     Raylib.DrawCircle(points[i].)
-        // }
-
-    }
-
-    public void MoveBody()
-    {
-        if (playerProps.Body.Count < 1) return;
-
-        for (int i = playerProps.Body.Count - 1; i > 0; i--)
-        {
-            playerProps.Body[i] = playerProps.Body[i - 1];
-        }
-
-        playerProps.Body[0] = new()
-        {
-            X = playerProps.X,
-            Y = playerProps.Y
-        };
+        Raylib.DrawCircle((int)(res.X / 2), (int)(res.Y / 2), playerProps.Size, Color.GREEN);
     }
 
     public void Move(float xSpeed, float ySpeed)
@@ -85,7 +60,7 @@ public class Player
             {
                 foodIndexes.Add(i);
                 food[i].taken = true;
-                playerProps.Body.Add(new());
+                playerProps.Size++;
             }
         }
 

@@ -75,7 +75,7 @@ public class Engine
 
     private void Render()
     {
-
+        // Render playable area
         int spaceX = -Food.SpawnRadius - (int)p.playerProps.X + (int)res.X / 2 - 20;
         int spaceY = -Food.SpawnRadius - (int)p.playerProps.Y + (int)res.Y / 2 - 20;
         int size = 40 + Food.SpawnRadius * 2;
@@ -84,6 +84,7 @@ public class Engine
         p.Draw();
 
 
+        // Render food
         while (foodListLock) ;
         foodListLock = true;
         for (int i = 0; i < foodPoints.Count; i++)
@@ -92,6 +93,8 @@ public class Engine
         }
         foodListLock = false;
 
+
+        // Render other players
         while (otherListLock) ;
         otherListLock = true;
         foreach (KeyValuePair<string, SnakeProperties> kvp in others)
@@ -124,7 +127,6 @@ public class Engine
         Vector2 referencePos = Vector2.Subtract(mousePos, new(res.X / 2, res.Y / 2)) / 100;
 
         p.Move(referencePos.X, referencePos.Y);
-        p.MoveBody();
     }
 
     private void MessageHandler(object sender, MessageEventArgs e)

@@ -9,8 +9,8 @@ public class SnakeProperties
     [JsonPropertyName("y"), JsonInclude]
     public int Y { get; set; }
 
-    [JsonPropertyName("body"), JsonInclude]
-    public List<BodyClass> Body { get; set; } = new();
+    [JsonPropertyName("size"), JsonInclude]
+    public int Size { get; set; } = 10;
 
     public void Draw(Color c, float playerX, float playerY)
     {
