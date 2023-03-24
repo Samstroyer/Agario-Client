@@ -12,8 +12,8 @@ public class SnakeProperties
     [JsonPropertyName("size"), JsonInclude]
     public int Size { get; set; } = 10;
 
-    public void Draw(Color c, float playerX, float playerY)
+    public void Draw(Color c, float playerX, float playerY, int size)
     {
-        Raylib.DrawCircle((int)(X) + Raylib.GetScreenWidth() / 2, (int)(Y) + Raylib.GetScreenHeight() / 2, 10, c);
+        Raylib.DrawCircle((int)(X) + Raylib.GetScreenWidth() / 2, (int)(Y) + Raylib.GetScreenHeight() / 2, size, c);
     }
 }

@@ -6,7 +6,6 @@ public class Player
     public SnakeProperties playerProps = new();
     Vector2 res;
 
-    private int playerRadius = 20;
     private Vector2 Pos
     {
         get
@@ -37,11 +36,11 @@ public class Player
 
         int limit = (int)(Food.SpawnRadius);
 
-        if (playerProps.X <= -limit) playerProps.X = -limit;
-        if (playerProps.X >= limit) playerProps.X = limit;
+        if (playerProps.X <= -limit + playerProps.Size) playerProps.X = -limit + playerProps.Size;
+        if (playerProps.X >= limit - playerProps.Size) playerProps.X = limit - playerProps.Size;
 
-        if (playerProps.Y <= -limit) playerProps.Y = -limit;
-        if (playerProps.Y >= limit) playerProps.Y = limit;
+        if (playerProps.Y <= -limit + playerProps.Size) playerProps.Y = -limit + playerProps.Size;
+        if (playerProps.Y >= limit - playerProps.Size) playerProps.Y = limit - playerProps.Size;
 
         Console.WriteLine("X: {0}, Y: {1}", playerProps.X, playerProps.Y);
 
@@ -56,7 +55,7 @@ public class Player
         for (int i = food.Count - 1; i >= 0; i--)
         {
             if (food[i].taken) continue;
-            if (Raylib.CheckCollisionCircles(Pos, playerRadius, new(food[i].X, food[i].Y), Food.Radius))
+            if (Raylib.CheckCollisionCircles(Pos, playerProps.Size, new(food[i].X, food[i].Y), Food.Radius))
             {
                 foodIndexes.Add(i);
                 food[i].taken = true;

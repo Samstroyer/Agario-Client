@@ -99,7 +99,7 @@ public class Engine
         otherListLock = true;
         foreach (KeyValuePair<string, SnakeProperties> kvp in others)
         {
-            kvp.Value.Draw(Color.GREEN, p.playerProps.X, p.playerProps.Y);
+            kvp.Value.Draw(Color.GREEN, p.playerProps.X, p.playerProps.Y, kvp.Value.Size);
         }
         otherListLock = false;
     }
