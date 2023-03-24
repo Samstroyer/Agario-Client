@@ -14,6 +14,6 @@ public class SnakeProperties
 
     public void Draw(Color c, float playerX, float playerY, int size)
     {
-        Raylib.DrawCircle((int)(X) + Raylib.GetScreenWidth() / 2, (int)(Y) + Raylib.GetScreenHeight() / 2, size, c);
+        Raylib.DrawCircle((int)(X - playerX) + Raylib.GetScreenWidth() / 2, (int)(Y - playerY) + Raylib.GetScreenHeight() / 2, size, c);
     }
 }
