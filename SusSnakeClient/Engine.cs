@@ -148,6 +148,9 @@ public class Engine
         int spaceY = -Food.SpawnRadius - (int)p.playerProps.Y + (int)res.Y / 2;
         int size = Food.SpawnRadius * 2;
         Raylib.DrawRectangle(spaceX, spaceY, size, size, Color.WHITE);
+
+        // Lines (makes it easier to see player movement on "dry" servers)
+
     }
 
     // Ends the Raylib draw
