@@ -19,7 +19,7 @@ public class Engine
     };
 
     // Transparent color for the leaderboard 😎
-    Color c = new(0, 0, 0, 120);
+    Color c = new(0, 200, 0, 120);
 
     // List of all the other players
     public static bool otherListLock = false;
@@ -113,8 +113,17 @@ public class Engine
 
     private void RenderScores()
     {
-        // Render a scoreboard with the top 3 players (by score)
-        // Raylib.DrawRectangle()
+        // Render a scoreboard with players (by score)
+        int fontSize = 12;
+
+        Raylib.DrawRectangle(600, 10, 190, 20 + (others.Count * 20), c);
+
+        int yPos = 15;
+        foreach (var kvp in others)
+        {
+            Raylib.DrawText($"{kvp.Key} : {kvp.Value.Size}", 610, yPos, fontSize, Color.BLACK);
+            yPos += 15;
+        }
     }
 
     private void RenderOthers()
