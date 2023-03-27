@@ -151,13 +151,11 @@ public class Engine
             Vector2 data = new(othersData[kvp.Key].X, othersData[kvp.Key].Y);
             Vector2 render = new(othersRender[kvp.Key].X, othersRender[kvp.Key].Y);
 
-            Vector2 newPos = Raymath.Vector2Lerp(data, render, 0.25f);
+            Vector2 newPos = Raymath.Vector2Lerp(render, data, 0.05f);
             othersRender[kvp.Key].X = newPos.X;
             othersRender[kvp.Key].Y = newPos.Y;
 
-            othersRender[kvp.Key].Draw(Color.GREEN, p.playerProps.X, p.playerProps.Y, kvp.Value.Size);
-
-            kvp.Value.Draw(Color.GREEN, p.playerProps.X, p.playerProps.Y, kvp.Value.Size);
+            othersRender[kvp.Key].Draw(Color.YELLOW, p.playerProps.X, p.playerProps.Y, kvp.Value.Size);
         }
         otherListLock = false;
     }
