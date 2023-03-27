@@ -27,7 +27,7 @@ public class Engine
     // List of all the other players
     public static bool otherListLock = false;
     Dictionary<string, PlayerProperties> othersData = new();
-    // Dictionary<string, PlayerProperties> othersRender = new();
+    Dictionary<string, PlayerProperties> othersRender = new();
 
     // Variables for the food points
     public static bool foodListLock = false;
@@ -140,9 +140,23 @@ public class Engine
             /*
                 Do not render yourself as it is done seperately (so you don't depend on server updates to render at your position...)
                 server rendering" would be better if it was more competetive, but that is more network comptetetive instead of game competetive
-                (The one with better connection would get the upper hand...)
+                (The one with better connection would get the upper hand...)*
             */
             if (kvp.Key == ownID) continue;
+            if (!othersRender.ContainsKey(kvp.Key))
+            {
+                othersRender.Add(kvp.Key, kvp.Value);
+            }
+
+            Vector2 data = new(othersData[kvp.Key].X, othersData[kvp.Key].Y);
+            Vector2 render = new(othersRender[kvp.Key].X, othersRender[kvp.Key].Y);
+
+            Vector2 newPos = Raymath.Vector2Lerp(data, render, 0.25f);
+            othersRender[kvp.Key].X = newPos.X;
+            othersRender[kvp.Key].Y = newPos.Y;
+
+            othersRender[kvp.Key].Draw(Color.GREEN, p.playerProps.X, p.playerProps.Y, kvp.Value.Size);
+
             kvp.Value.Draw(Color.GREEN, p.playerProps.X, p.playerProps.Y, kvp.Value.Size);
         }
         otherListLock = false;
