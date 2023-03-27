@@ -26,7 +26,8 @@ public class Engine
 
     // List of all the other players
     public static bool otherListLock = false;
-    Dictionary<string, PlayerProperties> others = new();
+    Dictionary<string, PlayerProperties> othersData = new();
+    // Dictionary<string, PlayerProperties> othersRender = new();
 
     // Variables for the food points
     public static bool foodListLock = false;
@@ -119,10 +120,10 @@ public class Engine
         // Render a scoreboard with players (by score)
         int fontSize = 12;
 
-        Raylib.DrawRectangle(600, 10, 190, 20 + (others.Count * 20), c);
+        Raylib.DrawRectangle(600, 10, 190, 20 + (othersData.Count * 20), c);
 
         int yPos = 15;
-        foreach (var kvp in others)
+        foreach (var kvp in othersData)
         {
             Raylib.DrawText($"{kvp.Key} : {kvp.Value.Size}", 610, yPos, fontSize, Color.BLACK);
             yPos += 15;
@@ -134,7 +135,7 @@ public class Engine
         // Render other players
         while (otherListLock) ;
         otherListLock = true;
-        foreach (KeyValuePair<string, PlayerProperties> kvp in others)
+        foreach (KeyValuePair<string, PlayerProperties> kvp in othersData)
         {
             /*
                 Do not render yourself as it is done seperately (so you don't depend on server updates to render at your position...)
@@ -208,7 +209,7 @@ public class Engine
                 // Get other players position and size
                 while (otherListLock) ;
                 otherListLock = true;
-                others = JsonSerializer.Deserialize<Dictionary<string, PlayerProperties>>(info.Content);
+                othersData = JsonSerializer.Deserialize<Dictionary<string, PlayerProperties>>(info.Content);
                 otherListLock = false;
                 break;
 
