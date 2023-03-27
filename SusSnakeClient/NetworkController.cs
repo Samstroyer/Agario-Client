@@ -1,5 +1,6 @@
 using System.Text.Json;
 using WebSocketSharp;
+using System.IO;
 using Raylib_cs;
 
 /*
@@ -8,12 +9,16 @@ using Raylib_cs;
 
 public class NetworkController
 {
+    readonly string path = "LastIP.txt";
+    bool fileExists;
     public WebSocket ws;
     string ipAddress = "";
 
     // When creating a NetworkController it connects client
     public NetworkController()
     {
+        fileExists = File.Exists(path) ? true : false;
+
         ConnectClient();
     }
 
@@ -31,15 +36,17 @@ public class NetworkController
         string enteredAddress = "";
         bool failed = false;
 
-    //// FOR DEBUG
-    // ws = new("ws://192.168.10.240:3000/snake");
-    // return;
-    //// ws = new("ws://10.151.173.27:3000/snake");
-    //// return;
+        if (fileExists) enteredAddress = File.ReadAllText(path);
 
-    // Could probably be done without a goto, but that would require insane code indentation and more complexity
-    // I rather just use a goto to make this simple and work smoothly 
-    RedoAddress:
+        //// FOR DEBUG
+        // ws = new("ws://192.168.10.240:3000/snake");
+        // return;
+        //// ws = new("ws://10.151.173.27:3000/snake");
+        //// return;
+
+        // Could probably be done without a goto, but that would require insane code indentation and more complexity
+        // I rather just use a goto to make this simple and work smoothly 
+        RedoAddress:
         while (true)
         {
             Raylib.BeginDrawing();
@@ -68,6 +75,7 @@ public class NetworkController
 
             enteredAddress += (char)(int)key;
         }
+
         try
         {
             // Try to connect to the IP
@@ -82,6 +90,8 @@ public class NetworkController
             failed = true;
             goto RedoAddress;
         }
+
+        File.WriteAllText(path, enteredAddress);
     }
 
     // This function sends the player data

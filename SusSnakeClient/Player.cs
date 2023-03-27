@@ -52,8 +52,7 @@ public class Player
         if (playerProps.Y <= -limit + playerProps.Size) playerProps.Y = -limit + playerProps.Size;
         if (playerProps.Y >= limit - playerProps.Size) playerProps.Y = limit - playerProps.Size;
 
-        Console.WriteLine("X: {0}, Y: {1}", playerProps.X, playerProps.Y);
-
+        // Console.WriteLine("X: {0}, Y: {1}", playerProps.X, playerProps.Y);
     }
 
     // This function checks if the player is eating any food

@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Text.Json;
 using System.Numerics;
 using WebSocketSharp;
@@ -6,6 +7,8 @@ using Raylib_cs;
 
 public class Engine
 {
+    Stopwatch stopWatch = new Stopwatch();
+
     // Class declarations
     NetworkController networkController;
     Player p;
@@ -196,6 +199,7 @@ public class Engine
     // It is in the Engine class as everything is easily accessible from it without making static variables
     private void MessageHandler(object sender, MessageEventArgs e)
     {
+
         SendInfo info = JsonSerializer.Deserialize<SendInfo>(e.Data);
 
         switch (info.MessageType)
