@@ -31,9 +31,9 @@ public class NetworkController
         string enteredAddress = "";
         bool failed = false;
 
-        //// FOR DEBUG
-        ws = new("ws://192.168.10.240:3000/snake");
-        return;
+    //// FOR DEBUG
+    // ws = new("ws://192.168.10.240:3000/snake");
+    // return;
     //// ws = new("ws://10.151.173.27:3000/snake");
     //// return;
 
