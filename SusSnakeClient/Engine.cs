@@ -12,10 +12,11 @@ public class Engine
     // Class declarations
     NetworkController networkController;
     Player p;
+    bool playerLock = false;
     Vector2 res;
 
     // Instead of sending the position every frame it is sent 4 times a second, pretty fast still...
-    System.Timers.Timer positionSender = new(250)
+    System.Timers.Timer positionSender = new(16)
     {
         AutoReset = true,
         Enabled = true
@@ -64,6 +65,9 @@ public class Engine
         // Start the game - Main loop
         while (!Raylib.WindowShouldClose())
         {
+            while (playerLock) ;
+            playerLock = true;
+
             MouseHandler();
             Logic();
 
@@ -72,6 +76,8 @@ public class Engine
             Render();
 
             EndScene();
+
+            playerLock = false;
         }
 
         networkController.Close();
@@ -151,7 +157,7 @@ public class Engine
             Vector2 data = new(othersData[kvp.Key].X, othersData[kvp.Key].Y);
             Vector2 render = new(othersRender[kvp.Key].X, othersRender[kvp.Key].Y);
 
-            Vector2 newPos = Raymath.Vector2Lerp(render, data, 0.05f);
+            Vector2 newPos = Raymath.Vector2Lerp(render, data, 0.5f);
             othersRender[kvp.Key].X = newPos.X;
             othersRender[kvp.Key].Y = newPos.Y;
 
@@ -244,6 +250,16 @@ public class Engine
                     foodPoints[item.Index] = item.Food;
                 }
                 foodListLock = false;
+                break;
+
+            case MessageType.Battle:
+                while (playerLock) ;
+                playerLock = true;
+
+                string loserID = info.Content;
+                if (loserID == ownID) p = new();
+
+                playerLock = false;
                 break;
 
             default:
