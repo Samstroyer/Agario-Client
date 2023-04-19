@@ -11,6 +11,7 @@ public class Player
 {
     public PlayerProperties playerProps = new();
     Vector2 res;
+    private int maxSize = 300;
 
     private Vector2 Pos
     {
@@ -73,6 +74,8 @@ public class Player
                 playerProps.Size++;
             }
         }
+
+        if (playerProps.Size > maxSize) playerProps.Size = maxSize;
 
         return foodIndexes;
     }
