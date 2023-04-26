@@ -27,7 +27,7 @@ public class SendInfo
     public string Content { get; set; }
 
     [JsonPropertyName("id"), JsonInclude]
-    public string ID = "System.Environment.MachineName";
+    public string ID = System.Environment.MachineName;
 
     // Publishing with another name makes same pc be able to make multiple clients
     // [JsonPropertyName("id"), JsonInclude]
