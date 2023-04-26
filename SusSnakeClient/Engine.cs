@@ -15,7 +15,7 @@ public class Engine
     bool playerLock = false;
     Vector2 res;
 
-    // Instead of sending the position every frame it is sent 4 times a second, pretty fast still...
+    // // Instead of sending the position every frame it is sent 4 times a second, pretty fast still...
     System.Timers.Timer positionSender = new(16)
     {
         AutoReset = true,
@@ -218,7 +218,6 @@ public class Engine
     // It is in the Engine class as everything is easily accessible from it without making static variables
     private void MessageHandler(object sender, MessageEventArgs e)
     {
-
         SendInfo info = JsonSerializer.Deserialize<SendInfo>(e.Data);
 
         switch (info.MessageType)

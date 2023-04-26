@@ -10,7 +10,7 @@ using Raylib_cs;
 public class Food
 {
     [JsonIgnore]
-    public static int SpawnRadius = 1000;
+    public static int SpawnRadius = 10000;
     [JsonIgnore]
     private static Color c = Color.RED;
     [JsonIgnore]

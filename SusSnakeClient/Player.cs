@@ -11,7 +11,7 @@ public class Player
 {
     public PlayerProperties playerProps = new();
     Vector2 res;
-    private int maxSize = 300;
+    private int maxSize = 1000;
 
     private Vector2 Pos
     {
